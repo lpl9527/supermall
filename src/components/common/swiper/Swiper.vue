@@ -16,7 +16,7 @@
 <script>
 	export default {
 		name: "Swiper",
-    props: {    //对父组件暴露的属性，可由父组件自定义
+    props: {
       interval: {
 		    type: Number,
         default: 3000

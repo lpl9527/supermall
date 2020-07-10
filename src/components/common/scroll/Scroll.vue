@@ -44,10 +44,13 @@
     },
     methods: {
       scrollTo(x, y, time=300){   //ES6语法给形参滚动时间默认值300毫秒
-        this.scroll.scrollTo(x, y, time)
+        this.scroll && this.scroll.scrollTo(x, y, time)
       },
       finishPullUp() {
         this.scroll.finishPullUp()
+      },
+      refresh() {
+        this.scroll && this.scroll.refresh()
       }
     }
   }

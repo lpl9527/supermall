@@ -71,6 +71,13 @@
       this.getHomeGoods('sell')
 
     },
+    mounted() {
+      const refresh = this.debounce(this.$refs.scroll.refresh, 200)
+      //监听item中图片加载完成
+      this.$bus.$on('itemImageLoad', () => {
+        refresh()
+      })
+    },
     methods: {
       /**
        * 网络请求相关的方法
@@ -104,6 +111,17 @@
       /**
        * 事件监听相关方法
        */
+      debounce(func, delay){    //防抖动，节流函数
+        let timer = null
+        return function (...args) {
+          if (timer){
+            clearTimeout(timer)
+          }
+          timer = setTimeout(() => {
+            func.apply(this, args)
+          }, delay)
+        }
+      },
       tabClick(index){    //点击商品分类时
         console.log(index)
         switch (index) {    //修改了分类数据时与其相关的计算属性也会改变，就会重新加载商品数据
@@ -128,7 +146,7 @@
         this.getHomeGoods(this.currentType)   //调用方法加载当前页的后一页数据
 
         //手动刷新滚动，重新计算可滚动高度
-        this.$refs.scroll.scroll.refresh()
+        this.$refs.scroll.refresh()
       }
     }
   }
